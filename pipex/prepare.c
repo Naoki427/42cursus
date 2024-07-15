@@ -6,7 +6,7 @@
 /*   By: nyoshimi <nyoshimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:36:49 by nyoshimi          #+#    #+#             */
-/*   Updated: 2024/06/13 19:19:37 by nyoshimi         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:58:19 by nyoshimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	make_cmd_arr(char **argv, char ***cmd)
 void	initialize_tool(t_tool *tool, char **argv)
 {
 	tool->count = 0;
-	tool->path = make_path_arr();
-	make_cmd_arr(argv, tool->cmd);
 	tool->filefd[INFILE] = open(argv[1], O_RDONLY);
 	if (tool->filefd[INFILE] == -1)
 	{
@@ -89,4 +87,6 @@ void	initialize_tool(t_tool *tool, char **argv)
 			exit(1);
 		}
 	}
+	tool->path = make_path_arr();
+	make_cmd_arr(argv, tool->cmd);
 }

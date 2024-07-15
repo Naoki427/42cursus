@@ -6,18 +6,18 @@
 /*   By: nyoshimi <nyoshimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:50:59 by nyoshimi          #+#    #+#             */
-/*   Updated: 2024/06/13 19:19:14 by nyoshimi         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:30:22 by nyoshimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	wait_for_all_process(t_tool tool)
+void	wait_for_all_process(int count)
 {
 	int	i;
 
 	i = 0;
-	while (i < tool.count)
+	while (i < count)
 	{
 		waitpid(-1, NULL, 0);
 		i++;
@@ -47,4 +47,11 @@ void	free_str2(char ***r)
 		free_str(r[j]);
 		j++;
 	}
+}
+
+void	free_all(t_tool *tool)
+{
+	if (tool->path)
+		free_str(tool->path);
+	free_str2(tool->cmd);
 }

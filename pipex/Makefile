@@ -7,7 +7,16 @@ MANDATORY_SRC = pipex.c \
 				support.c \
 				finishing.c
 
-BONUS_SRC = 	pipex_bonus.c
+BONUS_SRC = 	pipex_bonus.c \
+				ft_split_bonus.c \
+				libfunc_bonus.c \
+				prepare_bonus.c \
+				support_bonus.c \
+				finishing_bonus.c \
+				get_next_line_bonus.c \
+				get_next_line_utils_bonus.c \
+				heredoc_bonus.c
+				
 OBJ = $(SRC:.c=.o)
 
 RM = rm -rf

@@ -6,13 +6,13 @@
 /*   By: nyoshimi <nyoshimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:52:46 by nyoshimi          #+#    #+#             */
-/*   Updated: 2024/06/13 19:54:47 by nyoshimi         ###   ########.fr       */
+/*   Updated: 2024/06/16 10:27:33 by nyoshimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static	lowsize(char const *s, char c)
+static int	lowsize(char const *s, char c)
 {
 	int	i;
 	int	size;

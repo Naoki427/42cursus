@@ -6,7 +6,7 @@
 /*   By: nyoshimi <nyoshimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 14:14:09 by nyoshimi          #+#    #+#             */
-/*   Updated: 2024/06/13 19:23:22 by nyoshimi         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:33:54 by nyoshimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,25 +61,26 @@ void	do_child_process(t_tool *tool, int i, char **argv)
 
 void	pipex(t_tool *tool, char **argv, int i)
 {
-	pipe(tool->pipefd);
+	if (pipe(tool->pipefd) == -1)
+		handle_pipe_error(tool);
 	(tool->count)++;
 	tool->pid[i] = fork();
 	if (tool->pid[i] == -1)
 		return (perror("fork failed"));
 	else if (tool->pid[i] == 0)
 	{
-		dup2_and_close(tool->record, 0);
+		dup2_and_close(tool->record, 0, 0, tool);
 		if (i == 1)
-			dup2_and_close(tool->filefd[OUTFILE], 1);
+			dup2_and_close(tool->filefd[OUTFILE], 1, 0, tool);
 		else
-			dup2_and_close(tool->pipefd[1], 1);
+			dup2_and_close(tool->pipefd[1], 1, 0, tool);
 		do_child_process(tool, i, argv);
 	}
 	else
 	{
 		if (close(tool->pipefd[1]) == -1)
 			return (perror("close failed"));
-		dup2_and_close(tool->pipefd[0], tool->record);
+		dup2_and_close(tool->pipefd[0], tool->record, 1, tool);
 	}
 }
 
@@ -95,11 +96,11 @@ int	main(int argc, char **argv)
 	if (argc != 5)
 		return (1);
 	initialize_tool(&tool, argv);
-	if (open(argv[1], O_RDONLY) != -1)
-		pipex(&tool, argv, 0);
+	pipex(&tool, argv, 0);
 	pipex(&tool, argv, 1);
-	wait_for_all_process(tool);
-	free_str(tool.path);
+	wait_for_all_process(tool.count);
+	if (tool.path)
+		free_str(tool.path);
 	free_str2(tool.cmd);
 	return (0);
 }

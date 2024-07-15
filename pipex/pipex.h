@@ -6,7 +6,7 @@
 /*   By: nyoshimi <nyoshimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:26:47 by nyoshimi          #+#    #+#             */
-/*   Updated: 2024/06/13 18:26:50 by nyoshimi         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:36:21 by nyoshimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ char		**make_path_arr(void);
 void		make_cmd_arr(char **argv, char ***cmd);
 void		initialize_tool(t_tool *tool, char **argv);
 void		put_error_message(char *argv, int flg);
-void		wait_for_all_process(t_tool tool);
+void		wait_for_all_process(int count);
 void		free_str(char **r);
 void		free_str2(char ***r);
+void		free_all(t_tool *tool);
 void		handle_malloc_error(void);
+void		handle_pipe_error(t_tool *tool);
 int			find_ber(char *str);
 void		put_error_message(char *argv, int flg);
-void		dup2_and_close(int oldfd, int newfd);
+void		dup2_and_close(int oldfd, int newfd, int flg, t_tool *tool);
 #endif

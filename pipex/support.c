@@ -6,7 +6,7 @@
 /*   By: nyoshimi <nyoshimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:56:39 by nyoshimi          #+#    #+#             */
-/*   Updated: 2024/06/13 19:19:43 by nyoshimi         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:35:57 by nyoshimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 void	handle_malloc_error(void)
 {
 	perror("malloc failed");
+	exit(1);
+}
+
+void	handle_pipe_error(t_tool *tool)
+{
+	perror("pipe failed");
+	free_all(tool);
 	exit(1);
 }
 
@@ -45,16 +52,20 @@ void	put_error_message(char *argv, int flg)
 		perror("");
 }
 
-void	dup2_and_close(int oldfd, int newfd)
+void	dup2_and_close(int oldfd, int newfd, int flg, t_tool *tool)
 {
 	if (dup2(oldfd, newfd) == -1)
 	{
 		perror("dup2 failed");
+		if (flg == 1)
+			free_all(tool);
 		exit(1);
 	}
 	if (close(oldfd) == -1)
 	{
 		perror("close failed");
+		if (flg == 1)
+			free_all(tool);
 		exit(1);
 	}
 }

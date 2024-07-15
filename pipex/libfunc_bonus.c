@@ -6,7 +6,7 @@
 /*   By: nyoshimi <nyoshimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 19:52:59 by nyoshimi          #+#    #+#             */
-/*   Updated: 2024/06/13 19:54:27 by nyoshimi         ###   ########.fr       */
+/*   Updated: 2024/06/17 08:55:20 by nyoshimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ size_t	ft_strlen(const char *str)
 	count = 0;
 	if (!str)
 		return (0);
+	if (str == NULL)
+		return (0);
 	while (str[count])
 		count++;
 	return (count);
@@ -78,4 +80,46 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	r[i] = '\0';
 	return (r);
+}
+
+int	ft_strcmp(char *str1, char *str2)
+{
+	size_t	i;
+	int		num;
+
+	i = 0;
+	num = 0;
+	if (!str1 || !str2)
+		return (0);
+	while (str1[i] && str2[i])
+	{
+		num = (unsigned char)str1[i] - (unsigned char)str2[i];
+		if (str1[i] != str2[i])
+			break ;
+		i++;
+	}
+	num = (unsigned char)str1[i] - (unsigned char)str2[i];
+	return (num);
+}
+
+int	ft_strcmp2(char *str1, char *str2)
+{
+	size_t	i;
+	int		num;
+
+	i = 0;
+	num = 0;
+	if (!str1 || !str2)
+		return (0);
+	while (str1[i] && str2[i])
+	{
+		num = (unsigned char)str1[i] - (unsigned char)str2[i];
+		if (str1[i] != str2[i])
+			break ;
+		i++;
+	}
+	if (str1[i] == '\n' && str2[i] == '\0')
+		return (0);
+	num = (unsigned char)str1[i] - (unsigned char)str2[i];
+	return (num);
 }
